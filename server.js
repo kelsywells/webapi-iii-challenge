@@ -8,8 +8,16 @@ server.get('/', (req, res) => {
 
 //custom middleware
 
-function logger(req, res, next) {
+var timestamp = date.getTime();
 
+function logger(req, res, next) {
+  console.log('request method', req.method, Request)
+  console.log('request url', req.url)
+  console.log('time:', timestamp )
 };
+
+server.use(logger);
+next();
+
 
 module.exports = server;
