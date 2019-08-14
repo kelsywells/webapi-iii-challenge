@@ -55,8 +55,24 @@ function validateUserId(req, res, next) {
 
 
 function validateUser(req, res, next) {
+    const { name, body } = req.body;
 
-};
+    userDb.get
+        .then(user => {
+            if(!name) {
+               res.status(400).json({
+                   message: "missing required name field"
+               })
+            }else {
+                if(!body){
+                res.status(400).json({
+                    message: "missing user data"
+                })
+            }else {
+                next();
+            }
+            }
+            })
 
 function validatePost(req, res, next) {
 
