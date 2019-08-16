@@ -5,6 +5,7 @@ const postDb = require ('../posts/postDb');
 const users = require ('./userDb');
 const posts = './postDb';
 
+
 router.post('/', (req, res) => {
     const { name } = req.body;
     users.insert(name)
@@ -19,10 +20,13 @@ router.post('/', (req, res) => {
     })
 
 router.post('/:id/posts', (req, res) => {
-    const { id, text } = req.body;
-    posts.insert(userId, text)
+    const { text } = req.body;
+    const { id } = req.params;
+    const user_id = id;
+
+    posts.insert({ user_id, text })
     .then( posts => 
-        res.json(posts)
+        res.status(201).json(posts)
     )
     .catch(err => {
         res.status(500).json({
@@ -70,7 +74,7 @@ router.get('/:id/posts', (req, res) => {
                 res.json(user)
             }
         }
-        })
+        )
         .catch( err=> {
             res.status(500).json({
                 message: "Could not retrieve this user's post"
